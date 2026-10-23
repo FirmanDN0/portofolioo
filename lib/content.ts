@@ -23,7 +23,13 @@ export async function getPublishedProjects(): Promise<Project[]> {
   }
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.from("projects").select("slug,title,label,categories,cover_url,summary").eq("status", "published").order("sort_order");
-  if (error) throw new Error(`Unable to load projects: ${error.message}`);
+  if (error) {
+    if (error.code === "PGRST205") {
+      console.error("Supabase schema is not initialized. Run supabase/migrations/0001_portfolio.sql in the Supabase SQL Editor.");
+      return fallbackProjects;
+    }
+    throw new Error(`Unable to load projects: ${error.message}`);
+  }
   return data ?? [];
 }
 

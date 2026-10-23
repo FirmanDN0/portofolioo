@@ -1,12 +1,14 @@
-import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import Link from "next/link";
+import { requireAdmin } from "@/lib/admin";
 
 export default async function AdminPage() {
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/admin/login");
-  const { data: admin } = await supabase.from("admins").select("user_id").eq("user_id", user.id).maybeSingle();
-  if (!admin) redirect("/admin/login");
-  const { count } = await supabase.from("messages").select("*", { count: "exact", head: true });
-  return <main className="min-h-screen bg-gray-50 p-8"><div className="mx-auto max-w-5xl"><h1 className="text-4xl font-extrabold text-navy">Portfolio Admin</h1><p className="mt-2 text-gray-500">Signed in as {user.email}</p><div className="mt-8 rounded-2xl bg-white p-6 shadow-card"><p className="text-sm text-gray-500">Inbox messages</p><p className="mt-2 text-4xl font-extrabold">{count ?? 0}</p></div></div></main>;
+  const { supabase } = await requireAdmin();
+  const [{ count: messages }, { count: unread }, { count: projects }, { count: services }] = await Promise.all([
+    supabase.from("messages").select("*", { count: "exact", head: true }),
+    supabase.from("messages").select("*", { count: "exact", head: true }).eq("is_read", false),
+    supabase.from("projects").select("*", { count: "exact", head: true }),
+    supabase.from("services").select("*", { count: "exact", head: true })
+  ]);
+  const cards = [["Total projects", projects ?? 0, "/admin/projects"], ["Unread messages", unread ?? 0, "/admin/messages"], ["Total messages", messages ?? 0, "/admin/messages"], ["Services", services ?? 0, "/admin/services"]];
+  return <div><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-sm font-semibold text-navy">Overview</p><h1 className="mt-1 text-3xl font-extrabold text-slate-900 sm:text-4xl">Good morning, Firman</h1><p className="mt-2 text-sm text-slate-500">Manage your portfolio content from one place.</p></div><Link href="/" target="_blank" className="rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-white shadow-btn hover:bg-blue">View website ↗</Link></div><div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{cards.map(([label, value, href]) => <Link href={href as string} key={label as string} className="rounded-2xl bg-white p-5 shadow-card transition hover:-translate-y-0.5"><p className="text-sm text-slate-500">{label}</p><p className="mt-3 text-3xl font-extrabold text-navy">{value}</p><p className="mt-3 text-xs font-semibold text-blue">Manage →</p></Link>)}</div><div className="mt-8 grid gap-5 lg:grid-cols-2"><section className="rounded-2xl bg-white p-6 shadow-card"><h2 className="font-bold text-slate-900">Quick actions</h2><div className="mt-4 grid gap-3 sm:grid-cols-2"><Link href="/admin/projects/new" className="rounded-xl border border-slate-200 p-4 text-sm font-semibold hover:border-navy hover:text-navy">＋ Add project</Link><Link href="/admin/hero" className="rounded-xl border border-slate-200 p-4 text-sm font-semibold hover:border-navy hover:text-navy">✎ Edit hero</Link><Link href="/admin/messages" className="rounded-xl border border-slate-200 p-4 text-sm font-semibold hover:border-navy hover:text-navy">◎ Open inbox</Link><Link href="/admin/settings" className="rounded-xl border border-slate-200 p-4 text-sm font-semibold hover:border-navy hover:text-navy">⚙ Site settings</Link></div></section><section className="rounded-2xl bg-navy p-6 text-white shadow-card"><p className="text-sm text-blue-100">Publishing tip</p><h2 className="mt-2 text-xl font-bold">Keep your portfolio fresh</h2><p className="mt-2 text-sm leading-relaxed text-blue-100">Update your hero message and add recent work so visitors immediately understand what you do.</p><Link href="/admin/projects/new" className="mt-5 inline-block rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-navy">Create a project</Link></section></div></div>;
 }
