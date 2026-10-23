@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI & UX Designer - Personal Portfolio</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#1B2587',
+              blue: '#2339B0',
+              accent: '#3B57F0',
+              dark: '#111827',
+              subtle: '#6B7280',
+              bgLight: '#F8FAFC',
+              cardDark: '#2F333B',
+              progressRed: '#C93B47',
+              progressOrange: '#D97706',
+              progressGray: '#4B5563',
+              progressBlue: '#1E2B8F'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 12px 32px -4px rgba(27, 37, 135, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04)',
+            'float': '0 20px 35px -5px rgba(0, 0, 0, 0.1), 0 10px 15px -5px rgba(0, 0, 0, 0.05)',
+            'btn': '0 10px 20px -5px rgba(27, 37, 135, 0.3)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom decorative patterns & dots */
+    .pattern-lines {
+      background-image: repeating-linear-gradient(
+        45deg,
+        #4ecdc4 0,
+        #4ecdc4 3px,
+        transparent 0,
+        transparent 8px
+      );
+    }
+    .pattern-dots {
+      background-image: radial-gradient(#93c5fd 1.5px, transparent 1.5px);
+      background-size: 10px 10px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 font-sans antialiased overflow-x-hidden selection:bg-brand-navy selection:text-white">
+
+  <!-- ==================== HEADER / NAVBAR ==================== -->
+  <header class="w-full bg-white/95 backdrop-blur-md sticky top-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy rounded-lg p-1">
+        <svg class="w-10 h-10 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="12" fill="white"/>
+          <path d="M12 28L24 16L36 28L28 36L24 32L20 36L12 28Z" stroke="url(#logo_grad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24 16L18 22" stroke="#EF4444" stroke-width="4.5" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="logo_grad" x1="12" y1="16" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#EF4444"/>
+              <stop offset="0.5" stop-color="#F97316"/>
+              <stop offset="1" stop-color="#EF4444"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center space-x-7 lg:space-x-9 font-medium text-sm text-gray-600">
+        <a href="#hero" class="text-brand-navy font-semibold hover:text-brand-blue transition-colors">Home</a>
+        <a href="#services" class="hover:text-brand-navy transition-colors">Services</a>
+        <a href="#portfolio" class="hover:text-brand-navy transition-colors">Portfolio</a>
+        <a href="#about" class="hover:text-brand-navy transition-colors">About Us</a>
+        <a href="#contact" class="hover:text-brand-navy transition-colors">Contact Us</a>
+      </nav>
+
+      <!-- CTA Button Desktop -->
+      <div class="hidden md:block">
+        <a href="#contact" class="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-brand-navy text-white text-sm font-semibold hover:bg-brand-blue transition-all duration-300 shadow-btn hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-navy">
+          Let's Talk
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <div class="md:hidden flex items-center">
+        <button id="mobileMenuBtn" aria-label="Toggle Navigation Menu" aria-controls="mobileMenu" aria-expanded="false" class="p-2 rounded-lg text-gray-700 hover:text-brand-navy hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-brand-navy">
+          <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-gray-100 px-6 py-5 transition-all">
+      <nav class="flex flex-col space-y-4 font-medium text-gray-600">
+        <a href="#hero" class="text-brand-navy font-semibold py-1">Home</a>
+        <a href="#services" class="hover:text-brand-navy py-1">Services</a>
+        <a href="#portfolio" class="hover:text-brand-navy py-1">Portfolio</a>
+        <a href="#about" class="hover:text-brand-navy py-1">About Us</a>
+        <a href="#contact" class="hover:text-brand-navy py-1">Contact Us</a>
+        <a href="#contact" class="inline-block text-center mt-2 px-6 py-3 rounded-full bg-brand-navy text-white text-sm font-semibold shadow-btn">
+          Let's Talk
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section id="hero" class="relative pt-6 pb-20 lg:pt-12 lg:pb-32 overflow-hidden">
+    <!-- Decorative Pattern Top Right -->
+    <div class="absolute right-6 top-8 w-24 h-24 opacity-60 pointer-events-none hidden lg:block">
+      <svg viewBox="0 0 100 100" class="w-full h-full text-cyan-500 fill-current">
+        <g stroke="currentColor" stroke-width="3" stroke-linecap="round">
+          <line x1="20" y1="10" x2="25" y2="25" />
+          <line x1="40" y1="8" x2="45" y2="23" />
+          <line x1="60" y1="12" x2="65" y2="27" />
+          <line x1="80" y1="10" x2="85" y2="25" />
+          <line x1="10" y1="35" x2="15" y2="50" />
+          <line x1="30" y1="32" x2="35" y2="47" />
+          <line x1="50" y1="36" x2="55" y2="51" />
+          <line x1="70" y1="34" x2="75" y2="49" />
+          <line x1="90" y1="36" x2="95" y2="51" />
+          <line x1="25" y1="58" x2="30" y2="73" />
+          <line x1="45" y1="60" x2="50" y2="75" />
+          <line x1="65" y1="57" x2="70" y2="72" />
+          <line x1="85" y1="62" x2="90" y2="77" />
+        </g>
+      </svg>
+    </div>
+
+    <!-- Decorative Scatter Dots Bottom Left -->
+    <div class="absolute left-4 top-48 w-20 h-28 opacity-40 pointer-events-none hidden lg:block">
+      <div class="w-full h-full pattern-dots"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Content -->
+        <div class="lg:col-span-6 space-y-6 text-center lg:text-left z-10">
+          <p class="text-lg md:text-xl font-bold text-gray-900 tracking-tight">Hi I am</p>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-navy tracking-tight leading-[1.12]">
+            UI &amp; UX<br />Designer
+          </h1>
+          <p class="text-gray-500 text-sm sm:text-base leading-relaxed max-w-lg mx-auto lg:mx-0 font-normal">
+            With a passion for clean, intuitive, and effective design, I create digital products that enhance user engagement. Delivering aesthetic and interactive designs that make a lasting impact.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+            <a href="#contact" class="px-8 py-3 rounded-full bg-brand-navy text-white font-semibold text-sm shadow-btn hover:bg-brand-blue hover:shadow-lg transition-all active:scale-95">
+              Contact Us
+            </a>
+            <a href="#portfolio" class="px-8 py-3 rounded-full bg-white border border-gray-300 text-gray-700 font-semibold text-sm hover:border-brand-navy hover:text-brand-navy transition-all shadow-sm active:scale-95">
+              Portfolio
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Content: Profile Image & Floating Badges -->
+        <div class="lg:col-span-6 relative flex justify-center items-center">
+          
+          <!-- Concentric Background Circles -->
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div class="w-[300px] h-[300px] sm:w-[420px] sm:h-[420px] lg:w-[480px] lg:h-[480px] rounded-full border border-gray-200/80"></div>
+            <div class="absolute w-[240px] h-[240px] sm:w-[340px] sm:h-[340px] lg:w-[380px] lg:h-[380px] rounded-full border border-gray-200/60"></div>
+          </div>
+
+          <!-- Hero Main Portrait -->
+          <div class="relative z-10 w-full max-w-[340px] sm:max-w-[420px]">
+            <img 
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=700" 
+              alt="Professional UI & UX Designer" 
+              class="w-full h-auto object-cover rounded-3xl"
+              onerror="this.src='https://placehold.co/420x520/e5e7eb/1f2937?text=Designer+Portrait'"
+            />
+
+            <!-- Floating Badge: Customer Review (Top Left) -->
+            <div class="absolute -top-4 -left-4 sm:top-6 sm:-left-8 bg-white/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 shadow-float border border-gray-100 flex items-center gap-3 animate-fade-in">
+              <img 
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=80" 
+                alt="Client Reviewer" 
+                class="w-8 h-8 rounded-full object-cover ring-2 ring-brand-navy/20"
+                onerror="this.src='https://placehold.co/80x80/2752E7/ffffff?text=U'"
+              />
+              <div class="text-left">
+                <div class="flex text-amber-400 text-xs gap-0.5">
+                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <p class="text-[11px] font-bold text-gray-800 leading-none mt-1">20k+ Customer Review</p>
+              </div>
+            </div>
+
+            <!-- Floating Badge: Verified Checkmark (Left Center) -->
+            <div class="absolute top-1/2 -left-3 sm:-left-6 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-navy text-white flex items-center justify-center shadow-md">
+              <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+
+            <!-- Floating Badge: Social Media Pill (Bottom Right) -->
+            <div class="absolute bottom-4 right-0 sm:-right-4 bg-white/95 backdrop-blur-md rounded-full px-4 py-2 shadow-float border border-gray-100 flex items-center space-x-3">
+              <!-- Facebook -->
+              <a href="#" aria-label="Facebook" class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center hover:opacity-90 transition-opacity">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+              </a>
+              <!-- Telegram -->
+              <a href="#" aria-label="Telegram" class="w-7 h-7 rounded-full bg-sky-500 text-white flex items-center justify-center hover:opacity-90 transition-opacity">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              </a>
+              <!-- LinkedIn -->
+              <a href="#" aria-label="LinkedIn" class="w-7 h-7 rounded-full bg-blue-700 text-white flex items-center justify-center hover:opacity-90 transition-opacity">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ME SECTION ==================== -->
+  <section id="about" class="py-16 sm:py-24 bg-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        <!-- Left Image with Overlapping Organic Shapes -->
+        <div class="lg:col-span-5 relative flex justify-center">
+          <div class="relative w-full max-w-[340px]">
+            <!-- Decorative Backing Circles -->
+            <div class="absolute -bottom-6 -left-8 w-44 h-44 rounded-full bg-brand-navy opacity-90 -z-10"></div>
+            <div class="absolute top-1/4 -left-6 w-20 h-20 rounded-full bg-slate-800 -z-10"></div>
+            <div class="absolute bottom-2 -right-4 w-28 h-28 rounded-full bg-blue-600/30 -z-10"></div>
+            
+            <!-- Photo -->
+            <div class="rounded-3xl overflow-hidden shadow-card aspect-[4/5] bg-gray-100">
+              <img 
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" 
+                alt="About Me Portrait" 
+                class="w-full h-full object-cover"
+                onerror="this.src='https://placehold.co/400x500/e2e8f0/1e293b?text=About+Portrait'"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Content & Skill Bars -->
+        <div class="lg:col-span-7 space-y-6">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">
+            About Me
+          </h2>
+          <p class="text-gray-500 text-sm sm:text-base leading-relaxed max-w-xl font-normal">
+            Passionate UI/UX Designer with a Creative Approach to Crafting Intuitive and Engaging User Experiences.
+          </p>
+
+          <!-- Skill Bars List -->
+          <div class="space-y-6 pt-4 max-w-xl">
+            
+            <!-- UX Progress -->
+            <div class="space-y-2">
+              <div class="flex justify-between items-center text-sm font-bold text-gray-900">
+                <span>UX</span>
+                <span class="text-xs text-gray-400 font-normal">92%</span>
+              </div>
+              <div class="relative w-full h-2 bg-gray-200 rounded-full">
+                <div class="h-full bg-brand-progressRed rounded-full relative" style="width: 92%;">
+                  <!-- Slider Thumb Circle Indicator -->
+                  <span class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-4 border-brand-progressRed rounded-full shadow-md"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Website Design Progress -->
+            <div class="space-y-2">
+              <div class="flex justify-between items-center text-sm font-bold text-gray-900">
+                <span>Website Design</span>
+                <span class="text-xs text-gray-400 font-normal">96%</span>
+              </div>
+              <div class="relative w-full h-2 bg-gray-200 rounded-full">
+                <div class="h-full bg-brand-progressOrange rounded-full relative" style="width: 96%;">
+                  <span class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-4 border-brand-progressOrange rounded-full shadow-md"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- App Design Progress -->
+            <div class="space-y-2">
+              <div class="flex justify-between items-center text-sm font-bold text-gray-900">
+                <span>App Design</span>
+                <span class="text-xs text-gray-400 font-normal">85%</span>
+              </div>
+              <div class="relative w-full h-2 bg-gray-200 rounded-full">
+                <div class="h-full bg-brand-progressGray rounded-full relative" style="width: 85%;">
+                  <span class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-4 border-brand-progressGray rounded-full shadow-md"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Graphic Design Progress -->
+            <div class="space-y-2">
+              <div class="flex justify-between items-center text-sm font-bold text-gray-900">
+                <span>Graphic Design</span>
+                <span class="text-xs text-gray-400 font-normal">98%</span>
+              </div>
+              <div class="relative w-full h-2 bg-gray-200 rounded-full">
+                <div class="h-full bg-brand-progressBlue rounded-full relative" style="width: 98%;">
+                  <span class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-4 border-brand-progressBlue rounded-full shadow-md"></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICES SECTION ==================== -->
+  <section id="services" class="py-20 bg-gradient-to-b from-[#EFF3FC] to-[#DCE4F5] relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-14 space-y-2">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">
+          My Design Services
+        </h2>
+        <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">
+          Crafting visually engaging interfaces that are both intuitive and user-centered, ensuring a seamless experience.
+        </p>
+      </div>
+
+      <!-- Services Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Service Card 1: UI/UX Design -->
+        <div class="bg-white/40 hover:bg-white backdrop-blur-md rounded-2xl p-6 transition-all duration-300 hover:shadow-card hover:-translate-y-1 border border-white/50 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-blue-100/70 text-brand-blue flex items-center justify-center mb-5">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+              </svg>
+            </div>
+            <h3 class="text-base font-bold text-gray-900 mb-2">UI/UX Design</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              I turn research and user needs into clear flows, wireframes, and interfaces that are easy to use.
+              <a href="#services" class="text-brand-navy font-semibold hover:underline">Read more...</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Service Card 2: Web Design (Active / Highlighted in original design) -->
+        <div class="bg-white rounded-2xl p-6 transition-all duration-300 shadow-card hover:-translate-y-1 border border-white flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-brand-navy flex items-center justify-center mb-5">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="text-base font-bold text-gray-900 mb-2">Web Design</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              Responsive website systems with strong visual hierarchy, reusable components, and accessible interactions.
+              <a href="#services" class="text-brand-navy font-semibold hover:underline">Read more...</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Service Card 3: App Design -->
+        <div class="bg-white/40 hover:bg-white backdrop-blur-md rounded-2xl p-6 transition-all duration-300 hover:shadow-card hover:-translate-y-1 border border-white/50 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-blue-100/70 text-brand-blue flex items-center justify-center mb-5">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="text-base font-bold text-gray-900 mb-2">App Design</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              Mobile-first experiences that keep important tasks fast, focused, and comfortable on every screen.
+              <a href="#services" class="text-brand-navy font-semibold hover:underline">Read more...</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Service Card 4: Graphic Design -->
+        <div class="bg-white/40 hover:bg-white backdrop-blur-md rounded-2xl p-6 transition-all duration-300 hover:shadow-card hover:-translate-y-1 border border-white/50 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-blue-100/70 text-brand-blue flex items-center justify-center mb-5">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            </div>
+            <h3 class="text-base font-bold text-gray-900 mb-2">Graphic Design</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              Visual assets and brand materials that make products recognizable, consistent, and ready to share.
+              <a href="#services" class="text-brand-navy font-semibold hover:underline">Read more...</a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PORTFOLIO SECTION ==================== -->
+  <section id="portfolio" class="py-20 sm:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">
+          My Portfolio
+        </h2>
+        <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">
+          Explore a collection of my UI/UX design projects, each crafted to deliver seamless, user-centered experiences.
+        </p>
+      </div>
+
+      <!-- Filter Buttons Nav -->
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-14" role="tablist">
+        <button class="portfolio-filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all text-gray-600 hover:text-brand-navy bg-gray-50 hover:bg-gray-100" data-filter="all">All</button>
+        <button class="portfolio-filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all text-gray-600 hover:text-brand-navy bg-gray-50 hover:bg-gray-100" data-filter="uiux">UI/UX</button>
+        <button class="portfolio-filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all text-gray-600 hover:text-brand-navy bg-gray-50 hover:bg-gray-100" data-filter="web">Website Design</button>
+        <button class="portfolio-filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all text-gray-600 hover:text-brand-navy bg-gray-50 hover:bg-gray-100" data-filter="app">App Design</button>
+        <button class="portfolio-filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all text-gray-600 hover:text-brand-navy bg-gray-50 hover:bg-gray-100" data-filter="graphic">Graphic Design</button>
+      </div>
+
+      <!-- Portfolio Grid -->
+      <div id="portfolioGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Project Card 1 -->
+        <a href="projects/website-landing-page.html" class="portfolio-card group bg-brand-cardDark rounded-2xl overflow-hidden p-3.5 shadow-lg flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-4" data-category="uiux web">
+          <div class="rounded-xl overflow-hidden bg-gray-100 aspect-[16/11]">
+            <img 
+              src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=640" 
+              alt="Website Landing Page Design & Service" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onerror="this.src='https://placehold.co/600x420/374151/f3f4f6?text=Project+Preview+1'"
+            />
+          </div>
+          <div class="pt-4 pb-2 px-1">
+            <span class="text-[11px] font-semibold text-amber-500 uppercase tracking-wider block mb-1">Design</span>
+            <h3 class="text-sm sm:text-base font-bold text-white leading-snug group-hover:text-blue-300 transition-colors">
+              Analytics Dashboard Experience
+            </h3>
+          </div>
+        </a>
+
+        <!-- Project Card 2 -->
+        <a href="projects/analytics-dashboard.html" class="portfolio-card group bg-brand-cardDark rounded-2xl overflow-hidden p-3.5 shadow-lg flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-4" data-category="uiux web app">
+          <div class="rounded-xl overflow-hidden bg-gray-100 aspect-[16/11]">
+            <img 
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=640" 
+              alt="Analytics dashboard interface design" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onerror="this.src='https://placehold.co/600x420/374151/f3f4f6?text=Project+Preview+2'"
+            />
+          </div>
+          <div class="pt-4 pb-2 px-1">
+            <span class="text-[11px] font-semibold text-amber-500 uppercase tracking-wider block mb-1">Design</span>
+            <h3 class="text-sm sm:text-base font-bold text-white leading-snug group-hover:text-blue-300 transition-colors">
+              Data Visualization System
+            </h3>
+          </div>
+        </a>
+
+        <!-- Project Card 3 -->
+        <a href="projects/data-visualization.html" class="portfolio-card group bg-brand-cardDark rounded-2xl overflow-hidden p-3.5 shadow-lg flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-4" data-category="uiux graphic">
+          <div class="rounded-xl overflow-hidden bg-gray-100 aspect-[16/11]">
+            <img 
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=640" 
+              alt="Data visualization interface design" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onerror="this.src='https://placehold.co/600x420/374151/f3f4f6?text=Project+Preview+3'"
+            />
+          </div>
+          <div class="pt-4 pb-2 px-1">
+            <span class="text-[11px] font-semibold text-amber-500 uppercase tracking-wider block mb-1">Design</span>
+            <h3 class="text-sm sm:text-base font-bold text-white leading-snug group-hover:text-blue-300 transition-colors">
+              Website Landing Page Design &amp; Service
+            </h3>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT SECTION ==================== -->
+  <section id="contact" class="py-20 sm:py-24 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10 space-y-2">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight">Let's Work Together</h2>
+        <p class="text-gray-500 text-sm leading-relaxed">
+          Have a project in mind? Share a few details and I will get back to you soon.
+        </p>
+      </div>
+
+      <form id="contactForm" class="bg-white rounded-2xl p-6 sm:p-8 shadow-card space-y-5" novalidate>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label for="contactName" class="block text-sm font-semibold text-gray-900 mb-2">Name</label>
+            <input id="contactName" name="name" type="text" autocomplete="name" required
+              class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-navy"
+              placeholder="Your name">
+            <p class="contact-error hidden mt-1 text-xs text-red-600" data-error-for="contactName"></p>
+          </div>
+          <div>
+            <label for="contactEmail" class="block text-sm font-semibold text-gray-900 mb-2">Email</label>
+            <input id="contactEmail" name="email" type="email" autocomplete="email" required
+              class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-navy"
+              placeholder="you@example.com">
+            <p class="contact-error hidden mt-1 text-xs text-red-600" data-error-for="contactEmail"></p>
+          </div>
+        </div>
+        <div>
+          <label for="contactMessage" class="block text-sm font-semibold text-gray-900 mb-2">Message</label>
+          <textarea id="contactMessage" name="message" rows="5" minlength="10" required
+            class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-navy"
+            placeholder="Tell me about your project"></textarea>
+          <p class="contact-error hidden mt-1 text-xs text-red-600" data-error-for="contactMessage"></p>
+        </div>
+        <button type="submit" class="w-full sm:w-auto px-8 py-3 rounded-full bg-brand-navy text-white font-semibold text-sm shadow-btn hover:bg-brand-blue transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-navy">
+          Send Message
+        </button>
+        <p id="contactStatus" class="hidden text-sm" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:flex sm:justify-between sm:items-center">
+      <p class="text-sm">&copy; 2026 UI & UX Designer Portfolio. All rights reserved.</p>
+      <div class="flex justify-center space-x-6 mt-4 sm:mt-0 text-sm">
+        <a href="#hero" class="hover:text-white transition-colors">Home</a>
+        <a href="#services" class="hover:text-white transition-colors">Services</a>
+        <a href="#portfolio" class="hover:text-white transition-colors">Portfolio</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== INTERACTIVITY JAVASCRIPT ==================== -->
+  <script>
+    // Mobile navigation toggle
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('hidden') === false;
+      mobileBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        mobileBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Portfolio Category Filtering
+    const filterButtons = document.querySelectorAll('.portfolio-filter-btn');
+    const portfolioCards = document.querySelectorAll('.portfolio-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Update active class state
+        filterButtons.forEach(btn => {
+          btn.classList.remove('bg-brand-navy', 'text-white', 'shadow-sm', 'font-semibold');
+          btn.classList.add('bg-gray-50', 'text-gray-600', 'font-medium');
+        });
+
+        button.classList.remove('bg-gray-50', 'text-gray-600', 'font-medium');
+        button.classList.add('bg-brand-navy', 'text-white', 'shadow-sm', 'font-semibold');
+
+        const filterValue = button.getAttribute('data-filter');
+
+        portfolioCards.forEach(card => {
+          const categories = (card.getAttribute('data-category') || '').split(' ');
+          if (filterValue === 'all' || categories.includes(filterValue)) {
+            card.classList.remove('hidden');
+            card.style.opacity = '1';
+          } else {
+            card.classList.add('hidden');
+            card.style.opacity = '0';
+          }
+        });
+      });
+    });
+
+    // Contact form validation for the static prototype.
+    const contactForm = document.getElementById('contactForm');
+    const contactStatus = document.getElementById('contactStatus');
+
+    contactForm.addEventListener('submit', event => {
+      event.preventDefault();
+      let isValid = true;
+
+      contactForm.querySelectorAll('.contact-error').forEach(error => {
+        error.classList.add('hidden');
+        error.textContent = '';
+      });
+
+      const fields = [
+        {
+          id: 'contactName',
+          message: 'Please enter your name.'
+        },
+        {
+          id: 'contactEmail',
+          message: 'Please enter a valid email address.'
+        },
+        {
+          id: 'contactMessage',
+          message: 'Please enter at least 10 characters.'
+        }
+      ];
+
+      fields.forEach(field => {
+        const input = document.getElementById(field.id);
+        const error = contactForm.querySelector(`[data-error-for="${field.id}"]`);
+        if (!input.checkValidity()) {
+          error.textContent = field.message;
+          error.classList.remove('hidden');
+          isValid = false;
+        }
+      });
+
+      contactStatus.classList.remove('hidden', 'text-green-700', 'text-red-600');
+      if (!isValid) {
+        contactStatus.textContent = 'Please check the highlighted fields.';
+        contactStatus.classList.add('text-red-600');
+        return;
+      }
+
+      contactStatus.textContent = 'Thanks! The form is ready to connect to your contact backend.';
+      contactStatus.classList.add('text-green-700');
+      contactForm.reset();
+    });
+
+    // Keep the initial state aligned with the documented default filter.
+    document.querySelector('[data-filter="all"]').click();
+  </script>
+</body>
+</html>
